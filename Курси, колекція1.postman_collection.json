@@ -1,0 +1,594 @@
+{
+  "info": {
+    "_postman_id": "1600ed66-fbb2-4e10-9fff-b6c7361465a7",
+    "name": "Курси, колекція1",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "39877525"
+  },
+  "item": [
+    {
+      "name": "Invalid cases",
+      "item": [
+        {
+          "name": "Create List with NULL name",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "pk_302460406_3YLFQP8716J8NS87EBO6M9OKUFZOHF80",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": null}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base url}}/folder/901211471160/list",
+              "host": [
+                "{{base url}}"
+              ],
+              "path": [
+                "folder",
+                "901211471160",
+                "list"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create List without token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "let jsonData = pm.response.json();\r",
+                  "pm.environment.set(\"listId\", jsonData.id);\r",
+                  "console.log(\"List Name:\", jsonData.name);\r",
+                  "console.log(\"List ID:\", jsonData.id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "let randomNumber = Math.floor(Math.random() * 1000);\r",
+                  "pm.variables.set(\"List_Name\", \"List_\" + randomNumber);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "accept",
+                "value": "application/json"
+              },
+              {
+                "key": "content-type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"{{List_Name}}\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base url}}/folder/901211471160/list",
+              "host": [
+                "{{base url}}"
+              ],
+              "path": [
+                "folder",
+                "901211471160",
+                "list"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get List with wrong URL",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "pk_302460406_3YLFQP8716J8NS87EBO6M9OKUFZOHF80"
+              },
+              {
+                "key": "accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base url}}/list",
+              "host": [
+                "{{base url}}"
+              ],
+              "path": [
+                "list"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update List with invalid name",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "let jsonData = pm.response.json();\r",
+                  "pm.environment.set(\"listId\", jsonData.id);\r",
+                  "console.log(\"List Name:\", jsonData.name);\r",
+                  "console.log(\"List ID:\", jsonData.id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "let randomNumber = Math.floor(Math.random() * 1000);\r",
+                  "pm.variables.set(\"Update_List_Name\", kkk);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "pk_302460406_3YLFQP8716J8NS87EBO6M9OKUFZOHF80"
+              },
+              {
+                "key": "accept",
+                "value": "application/json"
+              },
+              {
+                "key": "content-type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"{{Update_List_Name}}\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base url}}/list/{{listId}}",
+              "host": [
+                "{{base url}}"
+              ],
+              "path": [
+                "list",
+                "{{listId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete List with invalid token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "1pk_302460406_3YLFQP8716J8NS87EBO6M9OKUFZOHF80"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base url}}/list/{{listId}}",
+              "host": [
+                "{{base url}}"
+              ],
+              "path": [
+                "list",
+                "{{listId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Lists with invalid URL",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "pk_302460406_3YLFQP8716J8NS87EBO6M9OKUFZOHF80"
+              },
+              {
+                "key": "accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base url}}/folder/901211471160/list1",
+              "host": [
+                "{{base url}}"
+              ],
+              "path": [
+                "folder",
+                "901211471160",
+                "list1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Create List",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "let jsonData = pm.response.json();\r",
+              "pm.environment.set(\"listId\", jsonData.id);\r",
+              "console.log(\"List Name:\", jsonData.name);\r",
+              "console.log(\"List ID:\", jsonData.id);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "let randomNumber = Math.floor(Math.random() * 1000);\r",
+              "pm.variables.set(\"List_Name\", \"List_\" + randomNumber);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "pk_302460406_3YLFQP8716J8NS87EBO6M9OKUFZOHF80"
+          },
+          {
+            "key": "accept",
+            "value": "application/json"
+          },
+          {
+            "key": "content-type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\":\"{{List_Name}}\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base url}}/folder/901211471160/list",
+          "host": [
+            "{{base url}}"
+          ],
+          "path": [
+            "folder",
+            "901211471160",
+            "list"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get List",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "pk_302460406_3YLFQP8716J8NS87EBO6M9OKUFZOHF80"
+          },
+          {
+            "key": "accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base url}}/list/{{listId}}",
+          "host": [
+            "{{base url}}"
+          ],
+          "path": [
+            "list",
+            "{{listId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update List",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "let jsonData = pm.response.json();\r",
+              "pm.environment.set(\"listId\", jsonData.id);\r",
+              "console.log(\"List Name:\", jsonData.name);\r",
+              "console.log(\"List ID:\", jsonData.id);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "let randomNumber = Math.floor(Math.random() * 1000);\r",
+              "pm.variables.set(\"Update_List_Name\", \"List_\" + randomNumber);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "pk_302460406_3YLFQP8716J8NS87EBO6M9OKUFZOHF80"
+          },
+          {
+            "key": "accept",
+            "value": "application/json"
+          },
+          {
+            "key": "content-type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\":\"{{Update_List_Name}}\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base url}}/list/{{listId}}",
+          "host": [
+            "{{base url}}"
+          ],
+          "path": [
+            "list",
+            "{{listId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete List",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "pk_302460406_3YLFQP8716J8NS87EBO6M9OKUFZOHF80"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base url}}/list/{{listId}}",
+          "host": [
+            "{{base url}}"
+          ],
+          "path": [
+            "list",
+            "{{listId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Lists",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "pk_302460406_3YLFQP8716J8NS87EBO6M9OKUFZOHF80"
+          },
+          {
+            "key": "accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base url}}/folder/901211471160/list",
+          "host": [
+            "{{base url}}"
+          ],
+          "path": [
+            "folder",
+            "901211471160",
+            "list"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
